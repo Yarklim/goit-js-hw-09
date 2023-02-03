@@ -45,6 +45,7 @@ const options = {
   onClose(selectedDates) {
     if (selectedDates[0] < new Date()) {
       Notify.failure('Please choose a date in the future');
+      refs.startBtn.disabled = true;
       return;
     }
     refs.startBtn.disabled = false;
@@ -57,6 +58,12 @@ const options = {
       if (!selectData) return;
 
       const difference = selectData - nowTime;
+
+      if (difference <= 0) {
+        refs.startBtn.disabled = true;
+        clearInterval(timerId);
+        return;
+      }
       const { days, hours, minutes, seconds } = convertMs(difference);
       refs.daysEl.textContent = addZero(days);
       refs.hoursEl.textContent = addZero(hours);
@@ -79,6 +86,7 @@ const options = {
       }
       showTimer();
       timerId = setInterval(showTimer, 1000);
+      refs.startBtn.disabled = true;
     };
 
     refs.startBtn.addEventListener('click', onClick);

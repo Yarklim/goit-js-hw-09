@@ -30,6 +30,7 @@ function onStartBtn() {
   startBtn.disabled = true;
   stopBtn.disabled = false;
 
+  updateBgColor(getRandomHexColor());
   intervalID = setInterval(() => updateBgColor(getRandomHexColor()), 1000);
 }
 
